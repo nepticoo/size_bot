@@ -11,7 +11,65 @@
 ## دور ۱
 
 ### من گفتم:
-<!-- دستیار پرامپت کامل طراحی را در ابتدای /design اینجا می‌نویسد -->
+
+<!-- این پرامپت را دستیار در گامِ /design نوشت. اگر از ابزارِ وب استفاده می‌کنی، از «شروعِ پرامپت» تا «پایانِ پرامپت» را کپی کن و همان‌جا بگذار. -->
+
+--- شروعِ پرامپت ---
+
+I need you to design the screens for a product called **Size** («سایز»). Design in **Persian (Farsi), right-to-left**. All visible text must be in Persian.
+
+**What the product does**
+
+Online clothing shops in Iran lose sales and get returns because customers don't know which size to buy. Size solves this: the customer lays out a garment they already own and are happy with the fit of, places any bank-card-sized card on top for scale, and photographs it from above. The system measures the garment and tells them which size of the shop's product to buy — expressed as fit advice, not a bare letter.
+
+**Two audiences, two very different design problems**
+
+- **Buyer pages — mobile only.** They arrive from an Instagram link and open inside Instagram's in-app browser. They are mid-purchase, hesitant, in a hurry, and have never heard of us. These screens must be extremely sparse: one job and one primary button per screen, large text, generous space.
+- **Seller panel — mobile-first, but must stay tidy on desktop.** Working screens for data entry, denser and more utilitarian. Instagram shop owners run their business from a phone, but the size chart is easier to fill on a bigger screen.
+
+**Visual direction**
+
+- Personality: trustworthy, simple, unpretentious. Calm and safe, never advert-like — the buyer is hesitating and anything flashy loses them.
+- White or near-white base, dark text, and **one** accent colour: a calm, slightly dark blue. Use the accent only on primary buttons and the recommended-size row.
+- The accent is deliberately neutral because different shop names appear at the top of the buyer page and it must not clash with any brand.
+- Medium, soft corner rounding. Not sharp and formal, not overly round and childish.
+- Persian numerals displayed throughout.
+
+**Screens to design — buyer (mobile)**
+
+1. **صفحهٔ آغاز** — Shop name at top, product name below, one short sentence explaining what will happen, one large «شروع» button. Two small lines at the bottom: «عکست نیم‌ساعت بعد پاک می‌شود» and «قدرت‌گرفته از سایز». Also show the error variant: the product is no longer active.
+2. **صفحهٔ راهنمای عکس** — The most important screen in the product. A simple line illustration of a garment laid flat with a card on it. Three short numbered instructions: lay one of your own well-fitting garments flat / place a bank-card-sized card on it / photograph from directly above. A small note that a national ID card, metro card, or the back of a bank card all work and the card number is not needed. Large button: «عکس بگیر یا انتخاب کن».
+3. **صفحهٔ در حالِ بررسی** — A calm waiting state, a few seconds. Simple activity indicator and «داریم لباست را اندازه می‌گیریم…». Nothing else, no buttons.
+4. **صفحهٔ جواب** — The payoff screen. At top, the recommended size with a «پیشنهادِ ما» badge. Below, **every** available size as a row: size name plus a fit description — «تنگ‌تر از لباسِ خودت» / «مثلِ لباسِ خودت» / «کمی آزادتر» / «آزاد». The recommended row is highlighted. Below that, at most two short notes about secondary measurements, e.g. «آستینش کمی بلندتر از لباسی است که فرستادی». **Never show raw measurement numbers.** At the bottom, an optional «برگرد و خرید کن» button and the «قدرت‌گرفته از سایز» line. **Also design the variant where no size fits**: an honest message that the product isn't available in their size, plus the nearest size with a frank explanation.
+5. **صفحهٔ عکسِ ردشده** — Must be helpful, never blaming; this is where someone either retries or leaves forever. One clear sentence naming exactly what was wrong (card not found / photo blurry / garment not fully in frame), the guide illustration again, and a large «دوباره عکس بگیر» button.
+6. **صفحهٔ جوابِ منقضی‌شده** — Shown when a result link is opened after 30 minutes. «این جواب پاک شده — عکس‌ها را بیشتر از نیم‌ساعت نگه نمی‌داریم.» plus a «از اول شروع کن» button.
+
+**Screens to design — seller (mobile-first, tidy on desktop)**
+
+7. **صفحهٔ ورود** — Product name, two fields, one button. Error: «نام کاربری یا رمز درست نیست» without saying which. No password-reset link; instead one line: «رمزت را فراموش کردی؟ به ما پیام بده.»
+8. **فهرستِ محصول‌ها** — Rows showing product name, garment type, number of sizes, and whether the link is live or the chart is still incomplete. A «محصولِ تازه» button. Design the empty state too.
+9. **صفحهٔ محصول** — Product name; garment type (بالاتنه / پایین‌تنه); a choice of whether the seller's numbers are **circumference («دور») or flat width («عرض»)**, with a small illustration showing the difference — this choice is critical and must be visually prominent; optional shop product-page link; optional product photo.
+10. **صفحهٔ جدولِ سایز** — The seller's heaviest task. **On mobile: one card per size**, expanding to show its measurement fields. **On desktop: the full grid**, all sizes and all measurements at once. In both, the two main criteria appear above the rest and are marked as required. A short hint next to each measurement saying where on the garment it is taken. A calm banner while incomplete: «لینکِ این محصول هنوز فعال نشده — دو اندازهٔ اصلی برای همهٔ سایزها لازم است.» Design the empty state.
+11. **صفحهٔ لینک و نصب** — The product link in a large box with a copy button. Below, an "if you have a website" section with a paste-in snippet and its own copy button. A small preview of what the buyer sees. Empty state: if the chart is incomplete, show that instead of the link.
+12. **فهرستِ درخواست‌ها** — Requests in time order: which product, when, which size was recommended, or that the photo was rejected. **No photos and nothing identifying the buyer.** A summary line at top: «این ماه ۲۳ نفر سایز گرفتند.» Design the empty state.
+
+**Screens to design — operator**
+
+13. **فهرستِ فروشگاه‌ها** — Shops with name, Instagram handle, phone, product count, active status. A «فروشگاهِ تازه» button that creates the shop and its account and **shows the generated password in full** so it can be passed to the seller.
+14. **صفحهٔ معیارهای اندازه** — Per garment type, the list of measurements with name, whether it is a main criterion, whether it is a circumference or a length, and where it is measured. A «معیارِ تازه» button.
+
+**Reference: the twelve measurements that ship**
+
+- بالاتنه: دورِ سینه★ · طولِ لباس★ · عرضِ شانه · طولِ آستین · دورِ بازو · دورِ کمرِ لباس
+- پایین‌تنه: دورِ کمر★ · قد★ · دورِ باسن · دورِ ران · دورِ دمِ پا · فاق
+
+(★ = main criterion, the two that decide the size.)
+
+**How to work with me**
+
+Ask everything in plain text. Do not generate uncopyable forms. Give me **at least two distinct options per screen**. Export the result as a `UI/` folder.
+
+--- پایانِ پرامپت ---
 
 ### دیزاین گفت:
 
