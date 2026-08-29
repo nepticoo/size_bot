@@ -9,7 +9,7 @@
 | زبانِ گفت‌وگو — conversation | English |
 | زبانِ مستندات — documents | فارسی |
 | نامِ پروژه — project | Size |
-| انبارِ کد — repo | <!-- هنوز ساخته نشده — منتظرِ نصبِ گیت و انتشارِ مخزنِ خصوصی --> |
+| انبارِ کد — repo | https://github.com/habibinavid404-star/Size |
 | پورتِ محلی — local port | 8000 |
 | آدرسِ محلی — local address | http://localhost:8000 |
 | روشِ استقرار — deploy method | <!-- پیش‌فرض / سفارشی — در /deploy تعیین می‌شود --> |
