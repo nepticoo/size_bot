@@ -11,6 +11,9 @@ class GarmentCropped(Exception):
 
 
 def _sample_background_lab(lab: np.ndarray, corner_size: int = 30) -> np.ndarray:
+    """Samples background colour from the four corners of the frame, per
+    architecture.md — the card sits ON the garment, so corners (not the
+    card's surroundings) are where clear table background is guaranteed."""
     h, w = lab.shape[:2]
     s = min(corner_size, h // 4, w // 4) or 1
     samples = np.concatenate(

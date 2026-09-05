@@ -115,6 +115,12 @@ def rectify(bgr: np.ndarray, card_corners: np.ndarray) -> tuple[np.ndarray, tupl
     shift = np.array([[1, 0, -min_xy[0]], [0, 1, -min_xy[1]], [0, 0, 1]], dtype=np.float32)
     matrix = shift @ matrix
 
-    warped = cv2.warpPerspective(bgr, matrix, (out_w, out_h))
+    # BORDER_REPLICATE avoids a black void in the corners the bounding-box
+    # canvas adds beyond the actual rotated frame (which would otherwise be
+    # mistaken for content when segmenting); it extends the nearest real
+    # edge pixels instead, which is background almost everywhere that matters.
+    warped = cv2.warpPerspective(
+        bgr, matrix, (out_w, out_h), borderMode=cv2.BORDER_REPLICATE
+    )
     card_rect = (int(-min_xy[0]), int(-min_xy[1]), int(dst_w), int(dst_h))
     return warped, card_rect
