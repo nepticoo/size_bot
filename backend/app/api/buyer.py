@@ -1,12 +1,13 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.codes import new_code
 from app.core.storage import LocalStorage
+from app.core.throttle import is_rate_limited
 from app.db import get_session
 from app.measure.ingest import UploadTooLarge, encode_jpeg, load_upright_rgb
 from app.measure.pipeline import Criterion as PipelineCriterion
@@ -66,7 +67,13 @@ async def _load_criteria(garment_type_id: int, db: AsyncSession) -> list[Measure
 
 
 @router.post("/p/{link_code}/measure")
-async def measure(link_code: str, photo: UploadFile, db: AsyncSession = Depends(get_session)):
+async def measure(
+    link_code: str, request: Request, photo: UploadFile, db: AsyncSession = Depends(get_session)
+):
+    client_ip = request.client.host if request.client else "unknown"
+    if is_rate_limited(client_ip):
+        raise HTTPException(status_code=429, detail="درخواست‌های زیاد. کمی بعد دوباره امتحان کن.")
+
     product, shop = await _get_active_product(link_code, db)
 
     data = await photo.read()
