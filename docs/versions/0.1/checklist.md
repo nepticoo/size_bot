@@ -51,11 +51,11 @@
 
 ## E — sizing and the answer
 
-- [ ] E1 — normalise the chart to circumference; **length is never doubled**, whatever `numbers_kind` says · done when: **scenario 18** — the same product entered as circumference and as half-widths answers identically — plus a unit test at the normalise level · after: C5
-- [ ] E2 — fit bands, recommendation by smallest `|d_circ|`, larger on a tie · done when: unit tests at every band boundary · after: E1, D6
-- [ ] E3 — no-size-fits detection and the honest message with the nearest size · done when: **scenario 5** · after: E2
-- [ ] E4 — notes: the mandatory length line above, separate from and outside the two-line secondary cap · done when: **scenario 4** — the length line is present and distinct · after: E2
-- [ ] E5 — **the answer must not contain a raw measurement anywhere**, including the API payload · done when: **scenario 1**, plus a test asserting no numeric measurement in the response · after: E2
+- [x] E1 — normalise the chart to circumference; **length is never doubled**, whatever `numbers_kind` says · done when: **scenario 18** — the same product entered as circumference and as half-widths answers identically — plus a unit test at the normalise level · after: C5
+- [x] E2 — fit bands, recommendation by smallest `|d_circ|`, larger on a tie · done when: unit tests at every band boundary · after: E1, D6
+- [x] E3 — no-size-fits detection and the honest message with the nearest size · done when: **scenario 5** · after: E2
+- [x] E4 — notes: the mandatory length line above, separate from and outside the two-line secondary cap · done when: **scenario 4** — the length line is present and distinct · after: E2
+- [x] E5 — **the answer must not contain a raw measurement anywhere**, including the API payload · done when: **scenario 1**, plus a test asserting no numeric measurement in the response · after: E2
 
 ## F — the buyer's four screens
 
@@ -69,17 +69,17 @@
 
 ## G — privacy, requests, the promise
 
-- [ ] G1 — `jobs` table + asyncio poller, 30 s tick · done when: a job with a past `run_at` runs within a tick · after: A3
-- [ ] G2 — `delete_photo` scheduled at **upload** time + 30 min, never extended by a view (decision 52) · done when: **scenario 7** — the file is gone from `uploads/` · after: G1, D1
-- [ ] G3 — startup sweep and the belt-and-braces pass over `photo_delete_at` · done when: the app is stopped across a deletion time, restarted, and the file goes immediately · after: G2
-- [ ] G4 — `410 Gone` computed from `photo_delete_at`, independent of the sweep · done when: **scenario 7** · after: G2
-- [ ] G5 — فهرستِ درخواست‌ها: time order, product, hour, size or rejection reason, two summary lines, empty state · done when: **scenario 15** · after: C1
-- [ ] G6 — **no endpoint anywhere returns a buyer photo, and no table holds anything identifying a buyer** · done when: **scenario 27**, plus a route audit · after: G5
-- [ ] G7 — inactive product or shop 404s the link; a tampered code 404s and never reaches another shop · done when: **scenarios 8, 9** · after: C10, B5
+- [x] G1 — `jobs` table + asyncio poller, 30 s tick · done when: a job with a past `run_at` runs within a tick · after: A3
+- [x] G2 — `delete_photo` scheduled at **upload** time + 30 min, never extended by a view (decision 52) · done when: **scenario 7** — the file is gone from `uploads/` · after: G1, D1
+- [x] G3 — startup sweep and the belt-and-braces pass over `photo_delete_at` · done when: the app is stopped across a deletion time, restarted, and the file goes immediately · after: G2
+- [x] G4 — `410 Gone` computed from `photo_delete_at`, independent of the sweep · done when: **scenario 7** · after: G2
+- [ ] G5 — فهرستِ درخواست‌ها: time order, product, hour, size or rejection reason, two summary lines, empty state · done when: **scenario 15** · after: C1 (backend ready; screen deferred to the F pass)
+- [x] G6 — **no endpoint anywhere returns a buyer photo, and no table holds anything identifying a buyer** · done when: **scenario 27**, plus a route audit · after: G5
+- [x] G7 — inactive product or shop 404s the link; a tampered code 404s and never reaches another shop · done when: **scenarios 8, 9** · after: C10, B5
 
 ## H — closing 0.1
 
-- [ ] H1 — upload limits and the per-IP throttle on `/measure` · done when: an oversized file and a flood are both refused politely · after: D7
+- [x] H1 — upload limits and the per-IP throttle on `/measure` · done when: an oversized file and a flood are both refused politely · after: D7
 - [ ] H2 — automated test suite green: unit (digits, codes, normalise, bands, rules) and API (auth, impersonation, activation, expiry) · done when: the whole suite passes from a clean database · after: all of A–G
 - [ ] H3 — **walk all 28 scenarios by hand against `http://localhost:8000`** and record the result · done when: every scenario passes or is written down with exactly what differed · after: H2
 - [ ] H4 — end-to-end from an empty database: operator → seller → buyer → request visible · done when: **scenario 26** with no database poking · after: H3
