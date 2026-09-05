@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "../../lib/api";
 import { useMe } from "../../lib/useMe";
@@ -18,6 +18,7 @@ export default function PanelLayout() {
   }
 
   const displayName = me.acting_as_shop_name ?? me.shop_name ?? me.username;
+  const navLink: React.CSSProperties = { color: "var(--color-text-secondary)", textDecoration: "none" };
 
   return (
     <div>
@@ -49,12 +50,25 @@ export default function PanelLayout() {
         }}
       >
         <b style={{ fontSize: 16 }}>{displayName}</b>
-        <button
-          onClick={logout}
-          style={{ background: "none", border: "none", fontSize: 14, color: "var(--color-text-secondary)" }}
-        >
-          خروج
-        </button>
+        <nav style={{ display: "flex", gap: 16, fontSize: 13.5 }}>
+          {me.role === "seller" || me.acting_as_shop_id ? (
+            <>
+              <Link to="/panel" style={navLink}>محصول‌ها</Link>
+              <Link to="/panel/requests" style={navLink}>درخواست‌ها</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/admin/shops" style={navLink}>فروشگاه‌ها</Link>
+              <Link to="/admin/criteria" style={navLink}>معیارها</Link>
+            </>
+          )}
+          <button
+            onClick={logout}
+            style={{ background: "none", border: "none", fontSize: 14, color: "var(--color-text-secondary)" }}
+          >
+            خروج
+          </button>
+        </nav>
       </div>
       <Outlet />
     </div>
