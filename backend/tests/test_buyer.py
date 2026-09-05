@@ -71,6 +71,7 @@ async def test_inactive_product_404s_scenario_8(client, db_session):
     shop, product, _ = await _seed_shop_and_product(db_session, top, chest, length, active=False)
     r = await client.get(f"/api/p/{product.link_code}")
     assert r.status_code == 404
+    assert r.json()["detail"] == "این محصول دیگر فعال نیست."
 
 
 async def test_tampered_link_code_404s_not_another_shop_scenario_9(client, db_session):
@@ -78,6 +79,7 @@ async def test_tampered_link_code_404s_not_another_shop_scenario_9(client, db_se
     await _seed_shop_and_product(db_session, top, chest, length)
     r = await client.get("/api/p/doesnotexist")
     assert r.status_code == 404
+    assert r.json()["detail"] == "پیدا نشد"
 
 
 async def test_no_card_photo_rejected_via_real_pipeline_scenario_2(client, db_session):

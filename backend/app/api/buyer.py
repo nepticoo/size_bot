@@ -41,10 +41,14 @@ async def _get_active_product(link_code: str, db: AsyncSession) -> tuple[Product
     result = await db.execute(select(Product).where(Product.link_code == link_code))
     product = result.scalar_one_or_none()
     if product is None:
+        # an unknown/tampered code: a quiet, generic "not found" that never
+        # hints whether some other shop's product exists (scenario 9)
         raise HTTPException(status_code=404, detail="پیدا نشد")
     shop = await db.get(Shop, product.shop_id)
     if shop is None or not shop.is_active or not product.is_active:
-        raise HTTPException(status_code=404, detail="پیدا نشد")
+        # a real, known link that its own owner switched off (scenario 8) —
+        # safe to be specific here since the code itself is already unguessable
+        raise HTTPException(status_code=404, detail="این محصول دیگر فعال نیست.")
     return product, shop
 
 
