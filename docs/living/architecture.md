@@ -250,8 +250,8 @@ Filled in at `/deploy`. Not part of the build.
 
 پایه — مستقل از این محصول:
 
-- **Python 3.12**
-- **Node.js 22 LTS**
+- **Python 3.14** (installed on this machine)
+- **Node.js 26** (installed on this machine)
 
 چیزی که این محصول اضافه می‌کند:
 

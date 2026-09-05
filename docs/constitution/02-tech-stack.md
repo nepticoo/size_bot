@@ -4,9 +4,9 @@ Pin the **major** version only; take the latest minor/patch inside it. Do not ch
 
 | Layer | Choice | Pinned major |
 |---|---|---|
-| Backend language | Python | **3.12** |
+| Backend language | Python | **3.14** (dev machine's installed major) |
 | Backend framework | FastAPI (Uvicorn, Pydantic v2) | **0.11x** |
-| Frontend language | Node.js | **22 LTS** |
+| Frontend language | Node.js | **26** (dev machine's installed major) |
 | Frontend framework | React | **19** |
 | Frontend build | Vite | **7** |
 | Frontend state | Zustand | **5** |
