@@ -1,42 +1,67 @@
-# Secrets — never commit
+# ─── Secrets — never commit ────────────────────────────────────────────────
 .env
 .env.*
 !.env.example
 secrets/*.local.md
 !secrets/*.example
 !secrets/README.md
+*.pem
+*.key
+!**/id_ed25519.pub
 
-# Local data
+# ─── Local data — the product's own state, never shared ────────────────────
+# The buyer photos live in uploads/ and are deleted after 30 minutes.
+# They must never reach the repository, not even by accident.
 data/
 uploads/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ─── Runtime ───────────────────────────────────────────────────────────────
 run.log
 .run.pid
+*.log
 
-# Node
+# ─── Frontend (React + Vite) ───────────────────────────────────────────────
 node_modules/
 dist/
 .vite/
+*.tsbuildinfo
+.pnpm-store/
 
-# Python
+# ─── Backend (Python + FastAPI) ────────────────────────────────────────────
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
 venv/
 *.egg-info/
+build/
+.mypy_cache/
+.ruff_cache/
 
-# Tests / coverage
+# ─── Tests / coverage ──────────────────────────────────────────────────────
 coverage/
 .coverage
 htmlcov/
 .pytest_cache/
 
-# Editor / OS
+# ─── Editor / OS ───────────────────────────────────────────────────────────
 .obsidian/
+.idea/
+*.swp
+*~
 .DS_Store
 Thumbs.db
-*.log
+desktop.ini
 
-# Existing product temporary & build artifacts
+# ─── Assistant scratch ─────────────────────────────────────────────────────
+.claude/settings.local.json
+
+# ─── existing_product/ — source only, no heavy or generated files ──────────
 existing_product/**/node_modules/
 existing_product/**/venv/
 existing_product/**/.venv/
@@ -44,4 +69,3 @@ existing_product/**/__pycache__/
 existing_product/**/.git/
 existing_product/**/dist/
 existing_product/**/*.sqlite3
-

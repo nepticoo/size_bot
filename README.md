@@ -1,43 +1,85 @@
-# CODO
+# سایز — Size
 
-CODO is a starter **folder** for building a real web MVP with AI, across two workshop days. It contains the *way of working* — a constitution and fifteen phase commands — and **no application code**. Code is written only after you and the assistant agree on the documents.
+> **کدام سایز را بخرم؟**
+> خریدار یکی از لباس‌های خودش را که اندازه‌اش است پهن می‌کند، یک کارتِ بانکی رویش می‌گذارد، از بالا عکس می‌گیرد — و می‌فهمد کدام سایزِ محصولِ فروشگاه به او می‌خورد.
 
-## What is in here, and what is deliberately not
+**وضعیت:** نسخهٔ ۰.۱ در دستِ ساخت · مستندات کامل و تأییدشده · هنوز کدی نوشته نشده
 
-CODO ships **fifteen command files in `.claude/commands/` and a constitution in `docs/constitution/`. Nothing else.** No sub-agents, no skills, no framework, no vendored tooling. That is a decision: everything an AI needs is plain markdown that any model can read, which keeps the project portable and the token cost honest. `CLAUDE.md` and `AGENTS.md` are the two entry points; they point at the same constitution.
+---
 
-## How you use it
+## مسئله
 
-1. Unzip CODO on your own computer, rename the folder to your project's name, and open it in VS Code.
-2. Publish it to your own GitHub account as a **private** repository (one button in the Source Control panel).
-3. Run **`/start`** in the Claude panel, and then follow the phase the assistant proposes after each step. You rarely need to look anything up; it tells you what to type next.
+خریدِ آنلاینِ پوشاک یک نقطهٔ شکستِ مشخص دارد: مشتری نمی‌داند کدام سایز به او می‌خورد. جدولِ سایزی که فروشنده منتشر می‌کند اندازهٔ **لباس** را می‌گوید، ولی مشتری اندازهٔ **خودش** را نمی‌داند. نتیجه سه هزینه است که هر سه پای فروشنده است: وقتی که صرفِ جواب دادن در دایرکت می‌شود، مشتری‌هایی که از تردید نمی‌خرند، و مرجوعی‌هایی که کرایه‌اش با فروشنده است.
 
-**Day one — the documents:**
+## راهِ حل و چیزی که آن را متفاوت می‌کند
 
-`/start` → `/idea-core` → `/prd` → `/data-model` → `/ux` → `/design`
+**خریدار هرگز از بدنش عکس نمی‌گیرد.** سرویس‌های خارجیِ اندازه‌گیریِ بدن از کاربر می‌خواهند با لباسِ چسبان جلوی دیوار بایستد؛ این در ایران شکست می‌خورد و دلیلش فنی نیست. «سایز» یک تی‌شرت روی تخت را اندازه می‌گیرد.
 
-**Day two — the product:**
+**مقایسه از جنسِ لباس با لباس است، نه بدن با لباس.** خریدار با انتخابِ لباسی که از تنش راضی است، سلیقهٔ فیتش را هم بدونِ اینکه بداند به سیستم گفته است.
 
-`/reconcile` → `/deps` → `/scenarios` → `/plan` → `/setup-dev` → `/build` → `/deploy` → `/test` → `/iterate`
+**عکس بعد از ۳۰ دقیقه پاک می‌شود.** اندازه‌های عددیِ بی‌نام می‌مانند، عکس نه. فروشنده هم اصلاً عکس را نمی‌بیند.
 
-Each command is one phase. The assistant writes documents, asks its questions **in files** rather than in the chat, and only writes code once the documents are agreed and the test scenarios exist.
+**مقیاس چیزی است که همه دارند.** یک کارتِ معمولی و یک گوشیِ معمولی — نه دوربینِ سه‌بُعدی، نه واقعیتِ افزوده، نه متر.
 
-## Where things live
+## سه گروهِ کاربر
 
-- به واقع **`docs/`** — everything you read and comment on: the idea, the PRD, the data model, the UX, the dependencies, the test scenarios, the decisions, the assistant's questions, and its `status.md`. See `docs/README.md`.
-- به واقع **`docs/constitution/`** — the assistant's own rules. You do not have to read them, but you can: the way of working is a document too.
-- به واقع **`docs/profile.md`** — your project's languages, repository, local port, and public address once it is deployed.
-- به واقع **`UI/`** — the screens you download from Claude on the web.
-- به واقع **`secrets/`** — your keys and tokens. **You write them in there yourself**; the file is git-ignored and never leaves your computer.
-- به واقع **`run.sh`** — builds the frontend, applies the migrations, and starts the app on your computer. The assistant runs it; you do not need to.
-- به واقع **`.vscode/settings.json`** — VS Code settings that ship with the project so the same folder behaves the same way on every laptop: a light theme, one-button commit-and-push, and a terminal that renders Persian properly. Change anything you like; it applies to this folder only.
+| کاربر | کجا | چه می‌کند |
+|---|---|---|
+| **خریدار** | فقط گوشی، داخلِ مرورگرِ اینستاگرام | لینک را می‌زند، عکس می‌فرستد، سایزش را می‌گیرد. حساب نمی‌سازد و شناسایی نمی‌شود. |
+| **فروشنده** | گوشی‌اول، روی کامپیوتر هم مرتب | محصول و جدولِ سایزش را ثبت می‌کند، لینک می‌گیرد و در بایو می‌گذارد. |
+| **گردانندهٔ سیستم** | کامپیوتر | حسابِ فروشنده‌ها را می‌سازد و معیارهای اندازه را مدیریت می‌کند. |
 
-## Three facts worth knowing
+## حساس‌ترین نقطهٔ محصول
 
-**Everything is on your own computer.** One copy of every file, one machine. Your code and your idea are yours and nobody else sees them — there is no shared server and no shared account.
+عکسی که از لباسِ خوابیده گرفته می‌شود **عرض** را می‌دهد، ولی جدولِ سایزِ فروشگاه‌ها معمولاً **دور** را منتشر می‌کند — و دور تقریباً دو برابرِ عرض است. اگر این دو اشتباه گرفته شوند، محصول با اطمینانِ کامل سایزی پیشنهاد می‌دهد که دو برابر غلط است. بدتر از جواب ندادن. برای همین فروشنده هنگامِ ساختنِ هر محصول یک‌بار صریح انتخاب می‌کند که اعدادش از کدام جنس است.
 
-**Your product goes on the internet on the second day, not the first.** Day one ends with agreed documents and a design you can show someone. `/deploy` is what puts the working product on a real address.
+---
 
-**Nothing is ever lost.** Every step is committed to your own private repository on GitHub, so the work survives the laptop — and any change can be undone.
+## مستندات
 
-> The project's version (0.1, 0.2, …) is separate from any book or course version. Secrets never go into git — only into `.env` and `secrets/`, both ignored.
+همهٔ تصمیم‌ها نوشته شده‌اند. اگر تازه به پروژه رسیده‌ای، به همین ترتیب بخوان:
+
+| فایل | چیست |
+|---|---|
+| [`docs/status.md`](docs/status.md) | **از اینجا شروع کن.** پروژه کجاست و قدمِ بعدی چیست. |
+| [`docs/living/prd.md`](docs/living/prd.md) | محصول چیست و چه می‌کند |
+| [`docs/living/data-model.md`](docs/living/data-model.md) | چه چیزهایی را به خاطر می‌سپارد |
+| [`docs/living/ux.md`](docs/living/ux.md) | چهارده صفحه، سه مسیر، و تم |
+| [`docs/living/roadmap.md`](docs/living/roadmap.md) | بانکِ ایده‌ها — چه چیزی به نسخه‌های بعد موکول شد و چرا |
+| [`docs/decisions.md`](docs/decisions.md) | هر تصمیم، با دلیلش و تاریخش |
+| [`UI/Screens v2.dc.html`](UI/) | طرحِ بصریِ هر چهارده صفحه — در مرورگر بازش کن |
+
+`docs/versions/0.1/` تاریخچهٔ کامل است: ایدهٔ خام، نُه دورِ سؤال و جواب، و گفت‌وگوی طراحی.
+
+## دامنهٔ نسخهٔ ۰.۱
+
+**هست:** ورودِ فروشنده · ثبتِ محصول و جدولِ سایز · لینکِ اختصاصیِ هر محصول · صفحهٔ خریدار و آپلودِ عکس · موتورِ اندازه‌گیری · پاسخِ فیت برای همهٔ سایزها · فهرستِ درخواست‌ها بدونِ عکس · قطعهٔ چسباندنی برای سایت · پاک‌شدنِ خودکارِ عکس
+
+**نیست:** اتصال به دایرکتِ اینستاگرام · رباتِ بله و تلگرام · پرداختِ درون‌سیستمی · ثبت‌نامِ خودکارِ فروشنده · مانتو و کت و پوشاکِ بچه
+
+هیچ‌کدام حذف نشده‌اند؛ در [`roadmap.md`](docs/living/roadmap.md) با دلیل و اولویت ثبت‌اند.
+
+## چطور اجرا می‌شود
+
+نسخهٔ ۰.۱ **هیچ وابستگیِ بیرونی ندارد** — نه حساب، نه قرارداد، نه پرداخت، نه انتظار برای تأییدِ کسی. اندازه‌گیری روی همین کامپیوتر و با روشِ هندسی انجام می‌شود، بدونِ هیچ سرویسِ هوشِ مصنوعیِ بیرونی.
+
+بعد از اینکه کد نوشته شد:
+
+```bash
+bash run.sh
+```
+
+یک برنامه روی یک پورت (`http://localhost:8000`)، با یک فایلِ SQLite. فرانت با React و Vite ساخته و همان‌جا سرو می‌شود، بک‌اند FastAPI است.
+
+## حریمِ خصوصی — چیزهایی که عمداً نگه نمی‌داریم
+
+- **هیچ چیزی که خریدار را بشناساند** — نه نام، نه شماره، نه حساب
+- **عکس، بعد از نیم‌ساعت** — بی‌استثنا، چه جواب داده شده باشد چه نه
+- **قد و وزنِ خریدار** — اصلاً پرسیده نمی‌شود
+- **هیچ اطلاعاتِ مالی** — در این نسخه پرداختی داخلِ محصول نیست
+
+رمزها و کلیدها فقط در `.env` و `secrets/secrets.local.md` می‌نشینند و هر دو در گیت نادیده گرفته می‌شوند.
+
+---
+
+<sub>این پروژه با روالِ CODO ساخته می‌شود — دستورهای مرحله‌ای در `.claude/commands/` و قواعدِ کار در `docs/constitution/`. برای ادامهٔ کار: `docs/status.md` را بخوان.</sub>

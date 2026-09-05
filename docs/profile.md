@@ -9,7 +9,7 @@
 | زبانِ گفت‌وگو — conversation | English |
 | زبانِ مستندات — documents | فارسی |
 | نامِ پروژه — project | Size |
-| انبارِ کد — repo | https://github.com/habibinavid404-star/Size |
+| انبارِ کد — repo | https://github.com/nepticoo/size_bot |
 | پورتِ محلی — local port | 8000 |
 | آدرسِ محلی — local address | http://localhost:8000 |
 | روشِ استقرار — deploy method | <!-- پیش‌فرض / سفارشی — در /deploy تعیین می‌شود --> |
