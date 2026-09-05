@@ -3,9 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.codes import new_code
-from app.core.deps import require_current_shop
+from app.core.deps import require_account, require_current_shop
 from app.db import get_session
-from app.models.garment import MeasurementCriterion
+from app.models.garment import GarmentType, MeasurementCriterion
 from app.models.product import Product, ProductSize, SizeMeasurement
 from app.models.request import MeasureRequest
 from app.models.shop import Shop
@@ -67,10 +67,57 @@ async def product_is_complete(product: Product, db: AsyncSession) -> tuple[bool,
     return complete == len(sizes), complete, len(sizes)
 
 
-@router.get("/products", response_model=list[ProductOut])
+@router.get("/garment-types")
+async def list_garment_types(
+    account=Depends(require_account), db: AsyncSession = Depends(get_session)
+):
+    result = await db.execute(select(GarmentType).where(GarmentType.is_active.is_(True)))
+    return [{"id": g.id, "name": g.name} for g in result.scalars().all()]
+
+
+@router.get("/criteria")
+async def list_criteria_for_seller(
+    account=Depends(require_account), db: AsyncSession = Depends(get_session)
+):
+    result = await db.execute(
+        select(MeasurementCriterion).order_by(
+            MeasurementCriterion.garment_type_id, MeasurementCriterion.sort_order
+        )
+    )
+    return [
+        {
+            "id": c.id,
+            "garment_type_id": c.garment_type_id,
+            "name": c.name,
+            "is_main": c.is_main,
+            "kind": c.kind,
+            "where_text": c.where_text,
+        }
+        for c in result.scalars().all()
+    ]
+
+
+@router.get("/products")
 async def list_products(shop: Shop = Depends(require_current_shop), db: AsyncSession = Depends(get_session)):
-    result = await db.execute(select(Product).where(Product.shop_id == shop.id))
-    return result.scalars().all()
+    products = (await db.execute(select(Product).where(Product.shop_id == shop.id))).scalars().all()
+    out = []
+    for p in products:
+        size_count = len(
+            (await db.execute(select(ProductSize.id).where(ProductSize.product_id == p.id))).scalars().all()
+        )
+        out.append(
+            {
+                "id": p.id,
+                "name": p.name,
+                "garment_type_id": p.garment_type_id,
+                "numbers_kind": p.numbers_kind,
+                "link_code": p.link_code,
+                "shop_url": p.shop_url,
+                "is_active": p.is_active,
+                "size_count": size_count,
+            }
+        )
+    return out
 
 
 @router.post("/products", response_model=ProductOut)
