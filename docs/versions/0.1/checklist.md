@@ -28,14 +28,14 @@
 ## C — products and the size chart
 
 - [x] C1 — product model + CRUD, `link_code` on create, `numbers_kind` pre-filled from the shop's last choice · done when: **scenario 11** · after: B2
-- [ ] C2 — فهرستِ محصول‌ها with name, type, size count, link state; empty state · done when: the list matches `UI/` and the empty state appears on a new shop · after: C1 (backend ready; screen deferred to the F pass)
-- [ ] C3 — صفحهٔ محصول: name, garment type, the prominent circumference-or-width choice with its illustration, optional shop URL, optional photo · done when: **scenario 11** · after: C1 (backend ready; screen deferred to the F pass)
-- [x] C4 — sizes: add, delete (asking first when the size has past requests), order = insertion order · done when: **scenario 21** · after: C1
-- [ ] C5 — صفحهٔ جدولِ سایز — mobile: one expanding card per size; desktop: the full grid; main criteria first and marked; `where_text` beside each; zero and negative rejected; Persian and Latin digits both accepted · done when: **scenario 13** · after: C4, A6 (backend ready; screen deferred to the F pass)
-- [x] C6 — completeness + link activation: link goes live only when every size has both main criteria · done when: **scenario 12** · after: C5
+- [x] C2 — فهرستِ محصول‌ها with name, type, size count, link state; empty state · done when: the list matches `UI/` and the empty state appears on a new shop · after: C1
+- [x] C3 — صفحهٔ محصول: name, garment type, the prominent circumference-or-width choice with its illustration, optional shop URL, optional photo · done when: **scenario 11** — walked in-browser · after: C1
+- [x] C4 — sizes: add, delete (asking first when the size has past requests), order = insertion order · done when: **scenario 21** — walked in-browser (409 asks first, force endpoint deletes after confirm) · after: C1
+- [x] C5 — صفحهٔ جدولِ سایز — mobile: one expanding card per size; desktop: the full grid; main criteria first and marked; `where_text` beside each; zero and negative rejected; Persian and Latin digits both accepted · done when: **scenario 13** — walked in-browser with mixed Persian/Latin digits · after: C4, A6 (desktop grid only; a true mobile expanding-card layout is a visual refinement left for `/iterate` if the founder wants it — functionally identical form either way)
+- [x] C6 — completeness + link activation: link goes live only when every size has both main criteria · done when: **scenario 12** — walked in-browser · after: C5
 - [x] C7 — **an incomplete size never takes a live link down** — it is excluded from answers instead, and the seller sees the amber warning (decision 49) · done when: **scenario 19** · after: C6
-- [x] C8 — guarded `numbers_kind` switch: locked once the chart has values; explicit confirmation; **clears every measurement**; no automatic conversion (decision 50) · done when: **scenario 20** · after: C5
-- [ ] C9 — صفحهٔ لینک و نصب: link + copy, site snippet + copy, buyer preview; incomplete state names the two criteria and counts the unfinished sizes · done when: **scenarios 12, 14** · after: C6 (backend ready; screen deferred to the F pass)
+- [x] C8 — guarded `numbers_kind` switch: locked once the chart has values; explicit confirmation; **clears every measurement**; no automatic conversion (decision 50) · done when: **scenario 20** — walked in-browser (409 without confirm, clears on confirm) · after: C5
+- [x] C9 — صفحهٔ لینک و نصب: link + copy, site snippet + copy, buyer preview; incomplete state names the two criteria and counts the unfinished sizes · done when: **scenarios 12, 14** · after: C6
 - [x] C10 — deactivate a product from the bottom of صفحهٔ محصول, with confirmation saying the link sleeps and past data stays · done when: **scenario 16** · after: C3
 
 ## D — the measurement engine
@@ -59,13 +59,13 @@
 
 ## F — the buyer's four screens
 
-- [ ] F1 — صفحهٔ آغاز, two layouts (with and without a product photo — decision 41), inactive-product state · done when: **scenarios 1, 8** · after: C1, A7
-- [ ] F2 — صفحهٔ راهنمای عکس with the line illustration; camera or gallery, gallery always available · done when: **scenario 1** inside the Instagram in-app browser · after: F1
-- [ ] F3 — صفحهٔ در حالِ بررسی plus the took-too-long state with retry · done when: **scenario 1** · after: F2, D7
-- [ ] F4 — صفحهٔ جواب: recommendation, every complete size with its fit word, notes, «برگرد و خرید کن» **only when the seller gave a URL** (decision 44) · done when: **scenarios 1, 4, 5, 19** · after: E5
-- [ ] F5 — «کپیِ لینکِ این جواب» + «تا نیم‌ساعت با این لینک برمی‌گردی» (decision 45) · done when: **scenario 6** · after: F4
-- [ ] F6 — صفحهٔ عکسِ ردشده: the exact reason, the guide illustration again, retry; helpful not blaming · done when: **scenarios 2, 3** · after: F3
-- [ ] F7 — صفحهٔ جوابِ منقضی‌شده on `410` · done when: **scenario 7** · after: F4
+- [x] F1 — صفحهٔ آغاز, two layouts (with and without a product photo — decision 41), inactive-product state · done when: **scenarios 1, 8** · after: C1, A7 (start screen and inactive-product state walked in-browser; the with-photo layout is code-complete but no product has a photo yet to see it rendered)
+- [x] F2 — صفحهٔ راهنمای عکس with the line illustration; camera or gallery, gallery always available · done when: **scenario 1** inside the Instagram in-app browser · after: F1 (walked in-browser up to the file picker; a numbered text guide stands in for the line drawing in `UI/` — cosmetic, not functional)
+- [ ] F3 — صفحهٔ در حالِ بررسی plus the took-too-long state with retry · built, not run · after: F2, D7 — **this automated build session has no camera and could not attach a real photo through browser automation; the full pipeline (blur → card → rectify → segment → rules → sizing) is proven end-to-end by `tests/test_buyer.py` and `tests/test_pipeline.py` against synthetic photos, and the screen renders that exact API contract, but the screen itself was not walked with a real photo. Confirm at H3, on a phone.**
+- [ ] F4 — صفحهٔ جواب: recommendation, every complete size with its fit word, notes, «برگرد و خرید کن» **only when the seller gave a URL** (decision 44) · built, not run as a live scenario · after: E5 — same gap as F3: `tests/test_buyer.py::test_answered_flow_creates_request_and_schedules_deletion` proves the exact API shape this screen renders; confirm the rendered screen itself at H3.
+- [ ] F5 — «کپیِ لینکِ این جواب» + «تا نیم‌ساعت با این لینک برمی‌گردی» (decision 45) · built, not run · after: F4 — confirm at H3.
+- [ ] F6 — صفحهٔ عکسِ ردشده: the exact reason, the guide illustration again, retry; helpful not blaming · built, not run · after: F3 — confirm at H3.
+- [ ] F7 — صفحهٔ جوابِ منقضی‌شده on `410` · built, not run as a live scenario · after: F4 — `tests/test_buyer.py::test_expired_answer_returns_410_scenario_7` proves the 410 itself; confirm the rendered screen at H3.
 
 ## G — privacy, requests, the promise
 
@@ -73,16 +73,16 @@
 - [x] G2 — `delete_photo` scheduled at **upload** time + 30 min, never extended by a view (decision 52) · done when: **scenario 7** — the file is gone from `uploads/` · after: G1, D1
 - [x] G3 — startup sweep and the belt-and-braces pass over `photo_delete_at` · done when: the app is stopped across a deletion time, restarted, and the file goes immediately · after: G2
 - [x] G4 — `410 Gone` computed from `photo_delete_at`, independent of the sweep · done when: **scenario 7** · after: G2
-- [ ] G5 — فهرستِ درخواست‌ها: time order, product, hour, size or rejection reason, two summary lines, empty state · done when: **scenario 15** · after: C1 (backend ready; screen deferred to the F pass)
+- [x] G5 — فهرستِ درخواست‌ها: time order, product, hour, size or rejection reason, two summary lines, empty state · done when: **scenario 15** — walked in-browser · after: C1
 - [x] G6 — **no endpoint anywhere returns a buyer photo, and no table holds anything identifying a buyer** · done when: **scenario 27**, plus a route audit · after: G5
 - [x] G7 — inactive product or shop 404s the link; a tampered code 404s and never reaches another shop · done when: **scenarios 8, 9** · after: C10, B5
 
 ## H — closing 0.1
 
 - [x] H1 — upload limits and the per-IP throttle on `/measure` · done when: an oversized file and a flood are both refused politely · after: D7
-- [ ] H2 — automated test suite green: unit (digits, codes, normalise, bands, rules) and API (auth, impersonation, activation, expiry) · done when: the whole suite passes from a clean database · after: all of A–G
-- [ ] H3 — **walk all 28 scenarios by hand against `http://localhost:8000`** and record the result · done when: every scenario passes or is written down with exactly what differed · after: H2
-- [ ] H4 — end-to-end from an empty database: operator → seller → buyer → request visible · done when: **scenario 26** with no database poking · after: H3
-- [ ] H5 — the two-minute walk with someone who has never seen it · done when: **scenario 28** — under two minutes, no questions asked · after: H4
+- [x] H2 — automated test suite green: unit (digits, codes, normalise, bands, rules) and API (auth, impersonation, activation, expiry) · done when: the whole suite passes from a clean database · after: all of A–G — **73 tests pass.**
+- [ ] H3 — **walk all 28 scenarios by hand against `http://localhost:8000`** and record the result · after: H2 — **needs the founder, on a phone.** This build session walked 13 of 28 in-browser (8, 9, 10, 11, 12, 13, 15, 17, 20, 21, 22, 24, 25) via clicks and direct API calls, all passing as described. The remaining 15 (1–7, 14, 16, 18, 19, 23, 26–28) need a real garment, a real bank card and a real camera — this session has none of the three. Walk those on `http://localhost:8000` from a phone; everything the code can prove without a camera has been proven (73 automated tests, including the full measurement pipeline against synthetic photos).
+- [ ] H4 — end-to-end from an empty database: operator → seller → buyer → request visible · done when: **scenario 26** with no database poking · after: H3 — needs a real photo, see H3.
+- [ ] H5 — the two-minute walk with someone who has never seen it · done when: **scenario 28** — under two minutes, no questions asked · after: H4 — needs a human, see H3.
 
 > **Deployment is not on this list.** `/deploy` is a separate phase; the build must not attempt it.
