@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./fonts/Vazirmatn-Medium.woff2") format("woff2");
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700 800;
+  font-display: swap;
+}
+
+:root {
+  --color-bg: #ffffff;
+  --color-text: #17181a;
+  --color-text-secondary: #6b6e73;
+  --color-text-muted: #8e9195;
+  --color-text-faint: #b2b4b6;
+  --color-border: #eaeae7;
+  --color-border-soft: #efefec;
+  --color-accent: #29508f;
+  --color-accent-hover: #1f3f74;
+  --color-accent-bg: #eef2f9;
+  --color-accent-bg-border: #cfdcee;
+  --color-amber-bg: #fdf8f1;
+  --color-amber-border: #d9a05b;
+  --color-amber-text: #b9772e;
+  --radius-lg: 18px;
+  --radius-md: 15px;
+  --radius-sm: 9px;
+  --font-family: "Vazirmatn", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
