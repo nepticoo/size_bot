@@ -4,6 +4,7 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
+import app.jobs.runner as jobs_runner
 from app.db import Base, get_session
 from app.main import app
 
@@ -22,9 +23,16 @@ async def db_session():
             yield session
 
     app.dependency_overrides[get_session] = override_get_session
+    # the background job runner opens its own sessions outside any request,
+    # so it needs the same test engine explicitly rather than via DI
+    original_session_local = jobs_runner.SessionLocal
+    jobs_runner.SessionLocal = session_maker
+
     async with session_maker() as session:
         yield session
+
     app.dependency_overrides.clear()
+    jobs_runner.SessionLocal = original_session_local
     await engine.dispose()
 
 
