@@ -78,8 +78,13 @@ def find_card(bgr: np.ndarray) -> np.ndarray | None:
     return best
 
 
-def rectify(bgr: np.ndarray, card_corners: np.ndarray) -> np.ndarray:
-    """Warps the frame so the card plane is exactly PX_PER_MM px/mm and level."""
+MAX_CANVAS_EDGE = 9000
+
+
+def rectify(bgr: np.ndarray, card_corners: np.ndarray) -> tuple[np.ndarray, tuple[int, int, int, int]]:
+    """Warps the frame so the card plane is exactly PX_PER_MM px/mm and level.
+    Returns (warped_image, card_rect) where card_rect = (x, y, w, h) of the
+    card's own position in the output, so callers can exclude it from segmentation."""
     dst_w = CARD_WIDTH_MM * PX_PER_MM
     dst_h = CARD_HEIGHT_MM * PX_PER_MM
 
@@ -91,18 +96,25 @@ def rectify(bgr: np.ndarray, card_corners: np.ndarray) -> np.ndarray:
     if width < height:
         dst_w, dst_h = dst_h, dst_w
 
-    # output canvas is larger than the card so the whole garment stays in frame;
-    # place the card near the top-left of a canvas scaled from the original frame.
-    scale = PX_PER_MM * CARD_WIDTH_MM / max(width, 1.0)
-    out_w = int(bgr.shape[1] * scale)
-    out_h = int(bgr.shape[0] * scale)
-    out_w = min(out_w, 6000)
-    out_h = min(out_h, 6000)
-
-    dst = np.array(
+    dst_at_origin = np.array(
         [[0, 0], [dst_w, 0], [dst_w, dst_h], [0, dst_h]], dtype=np.float32
     )
-    matrix = cv2.getPerspectiveTransform(src, dst)
-    # extend the transform to the full canvas by only translating, not rescaling further
+    matrix = cv2.getPerspectiveTransform(src, dst_at_origin)
+
+    # find how much of the plane the whole original frame covers once rectified,
+    # so the canvas is sized to hold all of it rather than an arbitrary guess
+    h, w = bgr.shape[:2]
+    frame_corners = np.array([[[0, 0]], [[w, 0]], [[w, h]], [[0, h]]], dtype=np.float32)
+    warped_corners = cv2.perspectiveTransform(frame_corners, matrix).reshape(-1, 2)
+    min_xy = warped_corners.min(axis=0)
+    max_xy = warped_corners.max(axis=0)
+
+    out_w = int(np.clip(max_xy[0] - min_xy[0], dst_w, MAX_CANVAS_EDGE))
+    out_h = int(np.clip(max_xy[1] - min_xy[1], dst_h, MAX_CANVAS_EDGE))
+
+    shift = np.array([[1, 0, -min_xy[0]], [0, 1, -min_xy[1]], [0, 0, 1]], dtype=np.float32)
+    matrix = shift @ matrix
+
     warped = cv2.warpPerspective(bgr, matrix, (out_w, out_h))
-    return warped
+    card_rect = (int(-min_xy[0]), int(-min_xy[1]), int(dst_w), int(dst_h))
+    return warped, card_rect

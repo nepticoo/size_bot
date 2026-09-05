@@ -91,7 +91,7 @@ def test_rectify_measures_known_rectangle_within_half_cm():
     corners = find_card(tilted)
     assert corners is not None
 
-    rectified = rectify(tilted, corners)
+    rectified, _card_rect = rectify(tilted, corners)
 
     # find the green reference rectangle in the rectified image and measure it
     hsv_mask = cv2.inRange(rectified, (0, 100, 0), (100, 200, 100))
